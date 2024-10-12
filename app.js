@@ -1,20 +1,21 @@
 import express from 'express'
-import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url';
 
 const app = express()
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.static('public'));
 
 app.get('/', (req,res) => {
-    fs.readFile('./public/index.html', (err,data) => {
-        res.write(data)
-    })
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 app.get('/about', (req,res) => {
-    fs.readFile('./public/about.html', (err,data) => {
-        res.write(data)
-    })
+
+    res.sendFile(path.join(__dirname, 'public', 'about.html'))
 })
 
 
